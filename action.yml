@@ -1,0 +1,26 @@
+name: 'Openfire Stop Server'
+description: 'Stops CI server'
+inputs:
+  debug:
+    description: 'Enable debug mode. Prints commands, and preserves temp directories if used.'
+    required: false
+    default: 'false'
+  domain:
+    description: 'XMPP domain name of server.'
+    required: false
+    default: 'example.org'
+  ip:
+    description: 'Set a hosts file for the given IP and host (or for example.com if running locally)'
+    required: false
+    default: '127.0.0.1'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set GitHub Path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+    - run: stopCIServer.sh -d -l -i ${{ inputs.ip }} -h ${{ inputs.domain }}
+      shell: bash
