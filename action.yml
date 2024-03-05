@@ -1,10 +1,6 @@
 name: 'Openfire Stop Server'
-description: 'Stops CI server'
+description: 'Stops an Openfire server (used in Continuous integration testing)'
 inputs:
-  debug:
-    description: 'Enable debug mode. Prints commands, and preserves temp directories if used.'
-    required: false
-    default: 'false'
   domain:
     description: 'XMPP domain name of server.'
     required: false
@@ -22,5 +18,5 @@ runs:
       shell: bash
       env:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
-    - run: stopCIServer.sh -d -l -i ${{ inputs.ip }} -h ${{ inputs.domain }}
+    - run: stopCIServer.sh -i ${{ inputs.ip }} -h ${{ inputs.domain }}
       shell: bash
